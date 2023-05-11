@@ -8,7 +8,7 @@ def print_menu():
         print (key, '--', menu_options[key] ) 
         
 
-# Create and Save new word into JSON
+# Create new word
 # ----------------------------------------
 def createNewWord ():
     word = input("Enter a word: ")
@@ -29,17 +29,33 @@ def saveAndQuit ():
         outfile.close()
         
 
+#Delete function
+#----------------------------------------
+def delWord ():
+    word_toDel = input("Enter the word you want to delete: ")
+    if word_toDel in dictionary:
+        dictionary.pop(word_toDel)
+    
+#Change word function
+#----------------------------------------
+def changeWord():
+    wordToChange = input("Enter the word you want to change: ")
+    newMeaning = input("Enter a new value:")
+    if wordToChange in dictionary:
+        dictionary[wordToChange] = [newMeaning]
+
+
 with open('dictionary.json', 'r') as openfile:
     dictionary = json.load(openfile)
 
 menu_options = {
     1: 'Create',
     2: 'Read All',
-    3: 'Delete word',
-    4: 'Quit',
+    3: 'Change',
+    4: 'Delete word',
+    5: 'Quit',
 }
 
- 
 
 while(True):
     print_menu()
@@ -51,8 +67,10 @@ while(True):
         case 2:
              print(dictionary)
         case 3:
-            print("test Delete word")
+            changeWord()
         case 4:
+            delWord()
+        case 5:
             saveAndQuit()
             break
 
