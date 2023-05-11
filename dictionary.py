@@ -1,11 +1,14 @@
 import json
 
+
+# Print menu function
+#----------------------------------------
 def print_menu():
     for key in menu_options.keys():
         print (key, '--', menu_options[key] ) 
         
 
-# Create new word function
+# Create and Save new word into JSON
 # ----------------------------------------
 def createNewWord ():
     word = input("Enter a word: ")
@@ -18,6 +21,17 @@ def createNewWord ():
         dictionary[word].append(meaning)
 
 
+# Save and Quit
+#-----------------------------------------
+def saveAndQuit ():
+    with open("dictionary.json", "w") as outfile:
+        outfile.write(json.dumps(dictionary, indent=4))
+        outfile.close()
+        
+
+with open('dictionary.json', 'r') as openfile:
+    dictionary = json.load(openfile)
+
 menu_options = {
     1: 'Create',
     2: 'Read All',
@@ -25,8 +39,7 @@ menu_options = {
     4: 'Quit',
 }
 
-dictionary = {}
-
+ 
 
 while(True):
     print_menu()
@@ -35,16 +48,12 @@ while(True):
     match option:
         case 1:
             createNewWord()        
-    
         case 2:
-            print(dictionary)
-
+             print(dictionary)
         case 3:
             print("test Delete word")
-
         case 4:
-            with open("dictionary.json", "a") as outfile:
-                outfile.write(json.dumps(dictionary, indent=2))
+            saveAndQuit()
             break
 
 
