@@ -8,11 +8,11 @@ def print_menu():
         print (key, '--', menu_options[key] ) 
         
 
-# Create new word
+# Create new word function
 # ----------------------------------------
 def createNewWord ():
     word = input("Enter a word: ")
-    meaning = input("Ënter meaning: ")
+    meaning = input("Ënter meaning: \n")
     
     
     if word not in dictionary:
@@ -21,7 +21,7 @@ def createNewWord ():
         dictionary[word].append(meaning)
 
 
-# Save and Quit
+# Save and Quit function
 #-----------------------------------------
 def saveAndQuit ():
     with open("dictionary.json", "w") as outfile:
@@ -35,8 +35,10 @@ def delWord ():
     word_toDel = input("Enter the word you want to delete: ")
     if word_toDel in dictionary:
         dictionary.pop(word_toDel)
+        print("\n Successfully deleted \n")
+
     
-#Change word function
+#Change function
 #----------------------------------------
 def changeWord():
     wordToChange = input("Enter the word you want to change: ")
@@ -44,33 +46,48 @@ def changeWord():
     if wordToChange in dictionary:
         dictionary[wordToChange] = [newMeaning]
 
+#Find function
+#----------------------------------------
+def find ():
+    findWord = input("Enter the word: ")
+    """ if findWord in dictionary:
+        print(findWord , ': ' ,  dictionary[findWord]) """
+    for x in dictionary.keys():
+        if findWord in x:
+            print(x , ': ' ,  dictionary[x])
+
+            
 
 with open('dictionary.json', 'r') as openfile:
     dictionary = json.load(openfile)
+    openfile.close()
 
 menu_options = {
     1: 'Create',
     2: 'Read All',
     3: 'Change',
-    4: 'Delete word',
-    5: 'Quit',
+    4: 'Find words',
+    5: 'Delete word',
+    6: 'Quit',
 }
 
 
 while(True):
     print_menu()
-    option = int(input('Enter your choice: '))
+    option = int(input('\nEnter your choice: '))
 
     match option:
         case 1:
             createNewWord()        
         case 2:
-             print(dictionary)
+            print(dictionary)
         case 3:
             changeWord()
         case 4:
-            delWord()
+            find()
         case 5:
+            delWord()
+        case 6:
             saveAndQuit()
             break
 
